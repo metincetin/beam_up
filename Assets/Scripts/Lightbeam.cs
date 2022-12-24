@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +37,11 @@ namespace BeamUp
                     return;
                 }
             }
+        }
+
+        public void Reflect(Vector3 direction)
+        {
+            _rigidbody.velocity = direction * _rigidbody.velocity.normalized;
         }
     }
 }

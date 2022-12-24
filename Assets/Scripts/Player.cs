@@ -14,7 +14,6 @@ namespace BeamUp
     {
         public GameInput GameInput;
 
-        public Steroid SteroidPrefab;
 
         private StateMachine _stateMachine = new StateMachine();
 
@@ -59,16 +58,6 @@ namespace BeamUp
         private void Update()
         {
             _stateMachine.Update(Time.deltaTime);
-        }
-
-
-
-        public Steroid SpawnSteroid(Vector2 inputPosition)
-        {
-            var position = GameInput.Gameplay.PointerPosition.ReadValue<Vector2>();
-            var cam = Camera.main;
-            var wp = cam.ScreenToWorldPoint(new Vector3(position.x, position.y, -cam.transform.position.z));
-            return Instantiate(SteroidPrefab, wp, Quaternion.identity);
         }
     }
 }
