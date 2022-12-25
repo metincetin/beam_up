@@ -17,7 +17,7 @@ namespace BeamUp.Utils
 
         protected override void PostPipelineStageCallback(
             CinemachineVirtualCameraBase vcam,
-            CinemachineCore.Stage stage, ref CameraState state, float deltaTime)
+            CinemachineCore.Stage stage, ref Cinemachine.CameraState state, float deltaTime)
         {
             if (stage == CinemachineCore.Stage.Finalize)
             {

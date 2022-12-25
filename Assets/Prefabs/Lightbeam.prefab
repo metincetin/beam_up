@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4948600698669347907}
   - component: {fileID: 6684990029686413448}
   - component: {fileID: 5567459886618967811}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468870518304232256}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.552, z: -1.384}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,9 +44,9 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.9245283, g: 0.621802, b: 0, a: 1}
-  m_Intensity: 100
-  m_Range: 10
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 10
+  m_Range: 100
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -87,7 +87,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 1970358777699464614}
   - component: {fileID: 7375211115247535508}
   - component: {fileID: 5774394133962424121}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4948,7 +4948,7 @@ GameObject:
   - component: {fileID: 4682117234202338603}
   - component: {fileID: 6069791057916254520}
   - component: {fileID: 5358525065020247674}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5031,7 +5031,7 @@ GameObject:
   - component: {fileID: 9006766107809951912}
   - component: {fileID: 9006766107809951913}
   - component: {fileID: 9006766107809951914}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lightbeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5093,6 +5093,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartSpeed: 5
   ExpectedHit: {fileID: 0}
+  _defaultColor: {r: 8.47419, g: 2.5289466, b: 0, a: 0}
+  _trailRenderer: {fileID: 9006766108451801885}
+  _graphics: {fileID: 5358525065020247674}
 --- !u!1 &9006766108451801887
 GameObject:
   m_ObjectHideFlags: 0
@@ -5103,7 +5106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9006766108451801886}
   - component: {fileID: 9006766108451801885}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5243,7 +5246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9006766108697719989}
   - component: {fileID: 9006766108697719988}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

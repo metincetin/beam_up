@@ -16,6 +16,7 @@ namespace BeamUp
 
 
         private StateMachine _stateMachine = new StateMachine();
+        public StateMachine StateMachine => _stateMachine;
 
         [SerializeField]
         private LineRenderer _shootLineRenderer;
@@ -25,7 +26,8 @@ namespace BeamUp
         private LightbeamController _lightbeamController;
         public LightbeamController LightbeamController => _lightbeamController;
 
-        private void Awake()
+
+		private void Awake()
         {
             GameInput = new GameInput();
 
