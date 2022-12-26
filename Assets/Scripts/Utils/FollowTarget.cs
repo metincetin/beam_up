@@ -11,6 +11,7 @@ namespace BeamUp.Utils
         [SerializeField]
         private LightbeamController _lightbeamController;
 
+
         private Transform _target;
 
         private void Update()

@@ -15,7 +15,7 @@ namespace BeamUp.Boosters
         {
             lightBeam.Color = Color;
             lightBeam.KillsOnImpact = true;
-
+            lightBeam.FillEnergy();
             lightBeam.StartCoroutine(RemoveDelayed(lightBeam));
         }
 

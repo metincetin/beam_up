@@ -289,6 +289,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shootLineRenderer: {fileID: 564354336}
   _lightbeamController: {fileID: 1689892413}
+  _UIController: {fileID: 0}
+  _followTarget: {fileID: 0}
+  _enemySpawner: {fileID: 0}
+  _boosterSpawner: {fileID: 0}
+  _playableDirector: {fileID: 0}
+  _scoreCounter: {fileID: 0}
+  _worldGenerator: {fileID: 0}
 --- !u!224 &255307917 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2057771437214148323, guid: 30b0833d014037644a9de56995acd43d, type: 3}
@@ -1964,7 +1971,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003653427027515432}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 50, z: -10}
+  m_LocalPosition: {x: 0, y: 4, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -23,6 +23,8 @@ namespace BeamUp
 
 		public bool AddOffsetWhenOccured;
 
+		public int OccuranceLimit = 0;
+
 		public float CalculateHorizontalPosition()
 		{
 			return (Random.value * 2 - 1) * HorizontalRandomness;
@@ -48,7 +50,6 @@ namespace BeamUp
 
 	public class WorldGenerator : MonoBehaviour
 	{
-		public Transform ReferencePoint;
 
 
 		public Occurance[] Occurances;
@@ -56,14 +57,22 @@ namespace BeamUp
 		private float _highestDistance;
 		private float CurrentDistance => _camera.transform.position.y;
 
-		public GameObject PlanetPrefab;
 
-		private float _lastSpawnHeight;
 
 		private Camera _camera;
 		private void Awake()
 		{
 			_camera = Camera.main;
+		}
+
+		public void Reset()
+		{
+			foreach(var occr in Occurances)
+			{
+				occr.OccuranceCount = 0;
+				occr.LastHeight = 0;
+			}
+			_highestDistance = 0;
 		}
 
 		private void Update()
@@ -72,7 +81,7 @@ namespace BeamUp
 
 			foreach (var occurance in Occurances)
 			{
-				if (occurance.LastHeight < CurrentDistance)
+				if (occurance.LastHeight <= CurrentDistance && (occurance.OccuranceLimit == 0 || occurance.OccuranceCount < occurance.OccuranceLimit))
 				{
 					float y = occurance.CalculateHeight();
 					float x = occurance.CalculateHorizontalPosition();

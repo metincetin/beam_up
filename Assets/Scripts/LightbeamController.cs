@@ -19,24 +19,33 @@ namespace BeamUp
         public List<Lightbeam> Instances { get => _instances; }
 
         public event Action<Lightbeam> LightbeamSpawned;
+		public event Action<Lightbeam> LightbeamDespawned;
 
         public event Action<Lightbeam, CelestialBody> LightbeamHit;
 
-        public Lightbeam FurthestLightbeam
+        public event Action<Lightbeam, GameObject> LightbeamKilled;
+
+
+		public Lightbeam FurthestLightbeam
         {
-            get
-            {
-                if (Instances.Count == 0) return null;
-                return Instances.OrderByDescending(x => x.transform.position.y).First();
-            }
+            get;
+            private set;
         }
 
 
         private void Start()
         {
-            if (_spawnAtStart)
+        }
+
+        private void Update()
+        {
+            if (Instances.Count == 0)
             {
-                Spawn(Vector3.zero);
+                FurthestLightbeam = null;
+            }
+            else
+            {
+                FurthestLightbeam = Instances.OrderByDescending(x => x.transform.position.y).First();
             }
         }
 
@@ -58,13 +67,26 @@ namespace BeamUp
                 _instances.Add(duplicate);
                 LightbeamSpawned?.Invoke(duplicate);
             };
+            inst.Killed += (go) =>
+            {
+				Despawn(inst);
+                LightbeamKilled?.Invoke(inst, go);
+			};
+            inst.DespawnRequested += () =>
+            {
+                Despawn(inst);
+                LightbeamDespawned?.Invoke(inst);
+            };
 
             return inst;
         }
 
         public void Despawn(Lightbeam lightbeam) {
-            _instances.Remove(lightbeam);
-            Destroy(lightbeam);
+            if (_instances.Contains(lightbeam))
+            {
+                _instances.Remove(lightbeam);
+                lightbeam.Kill();
+            }
         }
     }
 }

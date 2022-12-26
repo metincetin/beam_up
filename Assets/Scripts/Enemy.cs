@@ -1,4 +1,7 @@
+using Assets.Scripts.Utils;
 using BeamUp.Audio;
+using BeamUp.Tutorial;
+using BeamUp.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,10 +9,12 @@ using UnityEngine;
 
 namespace BeamUp
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IKiller, IRenderingStateListener
     {
         private Rigidbody2D _rigidbody;
         public LightbeamController LightbeamController { get; set; }
+
+        public string DeathMessage => "You are killed by the Shadowbringer";
 
         [SerializeField]
         private Transform _graphicsTransform;
@@ -34,6 +39,8 @@ namespace BeamUp
         [SerializeField]
         private ParticleSystem _rocketParticle;
 
+        private bool _waitingDeath;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -42,17 +49,13 @@ namespace BeamUp
         private void FixedUpdate()
         {
 
-			if (_fuelDuration <= 0)
+			if (_fuelDuration <= 0 || LightbeamController.Instances.Count == 0)
 			{
-                _rigidbody.velocity = Vector2.zero;
-                return;
-			}
-			if (LightbeamController.Instances.Count == 0)
-            {
+                _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, Vector3.zero, 8f * Time.deltaTime);
                 _rigidbody.velocity = Vector3.zero;
                 return;
             }
-            var target = LightbeamController.Instances[0];
+            var target = LightbeamController.FurthestLightbeam;
 
 
             var dir = (target.transform.position - transform.position).normalized;
@@ -71,6 +74,15 @@ namespace BeamUp
             return Mathf.Lerp(newMin, newMax, t);
         }
 
+        private void OnEnable()
+        {
+            DynamicallySpawnedGameObjectContainer.Add(gameObject);
+        }
+        private void OnDisable()
+        {
+            DynamicallySpawnedGameObjectContainer.Remove(gameObject);
+        }
+
         private void Update()
         {
             _fuelDuration -= Time.deltaTime;
@@ -78,10 +90,23 @@ namespace BeamUp
             if (_fuelDuration <= 0)
             {
                 _rocketParticle.Stop();
+
+                if (!_waitingDeath)
+                {
+                    StartCoroutine(KillDelayed());
+                }
+
+                _waitingDeath = true;
                 return;
             }
             _graphicsTransform.right = _rigidbody.velocity;
 		}
+
+        private IEnumerator KillDelayed()
+        {
+            yield return new WaitForSeconds(5f);
+            Kill();
+        }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
@@ -94,8 +119,21 @@ namespace BeamUp
         public void Kill()
         {
             Instantiate(_deathParticlePrefab, transform.position, Quaternion.identity);
-            SFXPlayer.Instance.Play(_deathSoundClips[Random.Range(0, _deathSoundClips.Length)], 0.3f);
+            SFXPlayer.Instance.PlayAtLocation(_deathSoundClips[Random.Range(0, _deathSoundClips.Length)], transform.position);
             Destroy(gameObject);
+        }
+
+        public void OnBeginRendering()
+        {
+            if (!TutorialState.EnemyIntroduction)
+            {
+                FindObjectOfType<TutorialController>().ShowTutorial("Enemy", gameObject);
+                TutorialState.EnemyIntroduction = true;
+            }
+        }
+
+        public void OnEndRendering()
+        {
         }
     }
 }

@@ -1,13 +1,15 @@
+using Assets.Scripts.Utils;
 using BeamUp;
+using BeamUp.Tutorial;
+using BeamUp.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Blackhole
+namespace BeamUp
 {
-	public class Blackhole : CelestialBody
+	public class Blackhole : CelestialBody, IKiller, IRenderingStateListener
 	{
-		private List<Lightbeam> _pulledBeams = new List<Lightbeam>();
 
 		[SerializeField]
 		private float _pullPower;
@@ -18,27 +20,14 @@ namespace Blackhole
 		[SerializeField]
 		private float _pullDistancePow = 2;
 
-		private void OnTriggerEnter2D(Collider2D collision)
-		{
-			var beam = collision.GetComponentInParent<Lightbeam>();
-			if (beam)
-			{
-				_pulledBeams.Add(beam);
-			}
-		}
+		public string DeathMessage => "You are sucked up by a black hole";
 
-		private void OnTriggerExit2D(Collider2D collision)
-		{
-			var beam = collision.GetComponentInParent<Lightbeam>();
-			if (beam)
-			{
-				_pulledBeams.Remove(beam);
-			}
-		}
+		[SerializeField]
+		private BlackholeTriggerListener _triggerListener;
 
 		private void FixedUpdate()
 		{
-			foreach (var beam in _pulledBeams)
+			foreach (var beam in _triggerListener.PulledBeams)
 			{
 				float distNorm = 1 - Mathf.Pow(Mathf.Min(Vector3.Distance(transform.position, beam.transform.position), _pullDistance) / _pullDistance, _pullDistancePow);
 				float power = distNorm * _pullPower;
@@ -46,6 +35,19 @@ namespace Blackhole
 				var newVelocity = Vector3.SlerpUnclamped(beam.Rigidbody.velocity, dir, 8 * Time.deltaTime * power);
 				beam.SetDirection(newVelocity);
 			}
+		}
+
+		public void OnBeginRendering()
+		{
+			if (!TutorialState.BlackholeIntroduction)
+			{
+				FindObjectOfType<TutorialController>().ShowTutorial("Blackhole", gameObject);
+				TutorialState.BlackholeIntroduction = true;
+			}
+		}
+
+		public void OnEndRendering()
+		{
 		}
 	}
 }

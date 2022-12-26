@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db961d5dac9eab4596704190c505713, type: 3}
   m_Name: BlueStar
   m_EditorClassIdentifier: 
-  Duration: 10
-  Icon: {fileID: 0}
+  Duration: 15
+  Icon: {fileID: 21300000, guid: 4850ee1756647744c9c1469348d5f09d, type: 3}
   Color: {r: 0, g: 1.0648196, b: 45.254833, a: 1}

@@ -7,15 +7,18 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.D95CDD96" = "earth"
+	"last_search.D95CDD96" = "planet"
 	"OpenInspectorPreview.D95CDD96" = "0"
-	"currentGroup.D95CDD96" = "all"
+	"currentGroup.D95CDD96" = "scene"
 	"last_search.71A69CD8" = ""
 	"OpenInspectorPreview.71A69CD8" = "0"
 	"currentGroup.71A69CD8" = "all"
 	"last_search.2538236A" = "Planet"
 	"OpenInspectorPreview.2538236A" = "1"
 	"currentGroup.2538236A" = "asset"
+	"last_search.FC949528" = "giantho"
+	"OpenInspectorPreview.FC949528" = "0"
+	"currentGroup.FC949528" = "all"
 }
 providers = {
 	adb = {
@@ -87,6 +90,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"planet"
 ]
 searchItemFavorites = [
 ]

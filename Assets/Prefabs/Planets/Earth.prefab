@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4598260866901082444}
   - component: {fileID: 7926935091178869865}
   - component: {fileID: 5064651275357850212}
+  - component: {fileID: 3146850825044145905}
   m_Layer: 0
   m_Name: Earth
   m_TagString: Untagged
@@ -84,6 +85,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3146850825044145905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2221570489480721466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf7f8f7df29abf47ba55278fef6b7d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2608777556061941048
 GameObject:
   m_ObjectHideFlags: 0

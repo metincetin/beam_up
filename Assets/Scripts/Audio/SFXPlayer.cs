@@ -26,5 +26,15 @@ namespace BeamUp.Audio
 		{
 			_audioSource.PlayOneShot(clip, volumeScale);
 		}
+		public void PlayAtLocation(AudioClip clip, Vector3 position)
+		{
+			var o = new GameObject("TempAudio");
+			var audio = o.AddComponent<AudioSource>();
+			audio.clip = clip;
+			audio.spatialBlend = 1f;
+			o.transform.position = position;
+			audio.Play();
+			Destroy(o, clip.length);
+		}
 	}
 }

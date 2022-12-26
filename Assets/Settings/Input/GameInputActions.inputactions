@@ -6,7 +6,7 @@
             "id": "694bccfc-20f0-4945-b364-5eb365905582",
             "actions": [
                 {
-                    "name": "PlaceSteroid",
+                    "name": "ReflectLightbeam",
                     "type": "Button",
                     "id": "8a2df5c1-ea0c-4276-9618-0c101b9b3534",
                     "expectedControlType": "Button",
@@ -41,7 +41,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gameplay",
-                    "action": "PlaceSteroid",
+                    "action": "ReflectLightbeam",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

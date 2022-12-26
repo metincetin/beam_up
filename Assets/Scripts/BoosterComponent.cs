@@ -1,3 +1,4 @@
+using BeamUp.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +24,20 @@ namespace BeamUp
 
 		[SerializeField]
 		private SpriteRenderer _icon;
+
+		private void Start()
+		{
+			UpdateVisuals();
+		}
+
+		private void OnEnable()
+		{
+			DynamicallySpawnedGameObjectContainer.Add(gameObject);
+		}
+		private void OnDisable()
+		{
+			DynamicallySpawnedGameObjectContainer.Remove(gameObject);
+		}
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{

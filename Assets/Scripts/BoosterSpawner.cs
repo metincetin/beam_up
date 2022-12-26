@@ -46,22 +46,22 @@ namespace BeamUp
 		{
 			while (true)
 			{
-				while (true)
+
+				if (AllowSpawn)
 				{
-					if (AllowSpawn)
-					{
-						Vector2 pos = _camera.transform.position;
-						pos.y += Random.Range(_spawnDistanceHeightRange.x, _spawnDistanceHeightRange.y);
-						pos.x += Random.Range(_spawnDistanceWidthRange.x, _spawnDistanceWidthRange.y);
+					yield return new WaitForSeconds(Random.Range(_spawnDurationRange.x, _spawnDurationRange.y));
+					Vector2 pos = _camera.transform.position;
+					pos.y += Random.Range(_spawnDistanceHeightRange.x, _spawnDistanceHeightRange.y);
+					pos.x += Random.Range(_spawnDistanceWidthRange.x, _spawnDistanceWidthRange.y);
 
 
-						Spawn(pos);
-					}
-					else
-					{
-						yield return null;
-					}
+					Spawn(pos);
 				}
+				else
+				{
+					yield return null;
+				}
+
 
 			}
 		}

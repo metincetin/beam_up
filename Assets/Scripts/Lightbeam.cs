@@ -17,11 +17,18 @@ namespace BeamUp
 
         private RaycastHit2D[] _circleCastHitResults = new RaycastHit2D[10];
 
+        private Vector2 _previousVelocity;
+
+        private int _energy;
+        [SerializeField]
+        private int _maxEnergy;
+
 
         public event Action<CelestialBody> CelestialBodyHit;
+        public event Action<GameObject> Killed;
         public event Action<Vector3> Duplicated;
+        public event Action DespawnRequested;
 
-        public bool QueuedDespawn { get; private set; }
 		public bool KillsOnImpact { get; internal set; }
 
         
@@ -52,6 +59,7 @@ namespace BeamUp
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _color = _defaultColor;
+            _energy = _maxEnergy;
         }
 
         public void Shoot(Vector3 shootDirection)
@@ -59,8 +67,13 @@ namespace BeamUp
             _rigidbody.velocity = shootDirection.normalized * StartSpeed;
         }
 
+        private void Update()
+        {
+            _trailRenderer.time = Mathf.Lerp(_trailRenderer.time, (_energy - 1) / (float)_maxEnergy + 0.2f, 8f * Time.deltaTime);
+		}
         private void FixedUpdate()
         {
+            _previousVelocity = _rigidbody.velocity;
             int hitCount = Physics2D.CircleCastNonAlloc(transform.position, 1, _rigidbody.velocity.normalized, _circleCastHitResults);
             for(int i = 0; i < hitCount; i++)
             {
@@ -75,12 +88,40 @@ namespace BeamUp
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            var hit = collision.collider.GetComponentInParent<CelestialBody>();
-
-            if (hit)
             {
-                CelestialBodyHit?.Invoke(hit);
-				hit.OnLightHit(this, collision.GetContact(0));
+                var hit = collision.collider.GetComponentInParent<CelestialBody>();
+
+                if (hit)
+                {
+                    CelestialBodyHit?.Invoke(hit);
+                    hit.OnLightHit(this, collision.GetContact(0));
+                }
+            }
+
+            if (collision.rigidbody && collision.rigidbody.TryGetComponent<Enemy>(out var enemy))
+            {
+                if (KillsOnImpact)
+                {
+                    enemy.Kill();
+                    _rigidbody.velocity = _previousVelocity;
+                }
+                else
+                {
+                    if (_energy > 0)
+                    {
+                        _energy--;;
+                    }
+                    else
+                    {
+                        Killed?.Invoke(enemy.gameObject);
+                        Despawn();
+                    }
+                }
+            }
+            if (collision.rigidbody && collision.rigidbody.TryGetComponent<Blackhole>(out var blackhole))
+            {
+                Killed?.Invoke(blackhole.gameObject);
+                Despawn();
             }
         }
 
@@ -91,7 +132,7 @@ namespace BeamUp
 
         public void Despawn()
         {
-            QueuedDespawn = true;
+            DespawnRequested?.Invoke();
         }
 
         public void SetDirection(Vector3 direction)
@@ -103,5 +144,17 @@ namespace BeamUp
         {
             Duplicated?.Invoke(withDirection);
         }
-    }
+
+        public void Kill()
+        {
+            _trailRenderer.transform.parent = null;
+            _trailRenderer.autodestruct = true;
+            Destroy(gameObject);
+        }
+
+		public void FillEnergy()
+		{
+            _energy = _maxEnergy;
+		}
+	}
 }

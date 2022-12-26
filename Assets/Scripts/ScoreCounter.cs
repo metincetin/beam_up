@@ -32,7 +32,13 @@ namespace BeamUp
             }
 		}
 
-		private void Update()
+        public void Reset()
+        {
+            DistanceTraveled = 0;
+            PlanetsLit = 0;
+        }
+
+        private void Update()
         {
             var lb = _lightBeamController.FurthestLightbeam;
             if (lb)

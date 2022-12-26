@@ -5091,8 +5091,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df92923cb8dd844eab79776bc2ddefb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartSpeed: 5
+  StartSpeed: 5.5
   ExpectedHit: {fileID: 0}
+  _maxEnergy: 5
   _defaultColor: {r: 8.47419, g: 2.5289466, b: 0, a: 0}
   _trailRenderer: {fileID: 9006766108451801885}
   _graphics: {fileID: 5358525065020247674}

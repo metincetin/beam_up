@@ -30,7 +30,7 @@ namespace BeamUp.Input
             ""id"": ""694bccfc-20f0-4945-b364-5eb365905582"",
             ""actions"": [
                 {
-                    ""name"": ""PlaceSteroid"",
+                    ""name"": ""ReflectLightbeam"",
                     ""type"": ""Button"",
                     ""id"": ""8a2df5c1-ea0c-4276-9618-0c101b9b3534"",
                     ""expectedControlType"": ""Button"",
@@ -65,7 +65,7 @@ namespace BeamUp.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gameplay"",
-                    ""action"": ""PlaceSteroid"",
+                    ""action"": ""ReflectLightbeam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -110,7 +110,7 @@ namespace BeamUp.Input
 }");
             // Gameplay
             m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-            m_Gameplay_PlaceSteroid = m_Gameplay.FindAction("PlaceSteroid", throwIfNotFound: true);
+            m_Gameplay_ReflectLightbeam = m_Gameplay.FindAction("ReflectLightbeam", throwIfNotFound: true);
             m_Gameplay_PointerPosition = m_Gameplay.FindAction("PointerPosition", throwIfNotFound: true);
             m_Gameplay_ShootDrag = m_Gameplay.FindAction("ShootDrag", throwIfNotFound: true);
         }
@@ -172,14 +172,14 @@ namespace BeamUp.Input
         // Gameplay
         private readonly InputActionMap m_Gameplay;
         private IGameplayActions m_GameplayActionsCallbackInterface;
-        private readonly InputAction m_Gameplay_PlaceSteroid;
+        private readonly InputAction m_Gameplay_ReflectLightbeam;
         private readonly InputAction m_Gameplay_PointerPosition;
         private readonly InputAction m_Gameplay_ShootDrag;
         public struct GameplayActions
         {
             private @GameInput m_Wrapper;
             public GameplayActions(@GameInput wrapper) { m_Wrapper = wrapper; }
-            public InputAction @PlaceSteroid => m_Wrapper.m_Gameplay_PlaceSteroid;
+            public InputAction @ReflectLightbeam => m_Wrapper.m_Gameplay_ReflectLightbeam;
             public InputAction @PointerPosition => m_Wrapper.m_Gameplay_PointerPosition;
             public InputAction @ShootDrag => m_Wrapper.m_Gameplay_ShootDrag;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
@@ -191,9 +191,9 @@ namespace BeamUp.Input
             {
                 if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
                 {
-                    @PlaceSteroid.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlaceSteroid;
-                    @PlaceSteroid.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlaceSteroid;
-                    @PlaceSteroid.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlaceSteroid;
+                    @ReflectLightbeam.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReflectLightbeam;
+                    @ReflectLightbeam.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReflectLightbeam;
+                    @ReflectLightbeam.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReflectLightbeam;
                     @PointerPosition.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerPosition;
                     @PointerPosition.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerPosition;
                     @PointerPosition.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPointerPosition;
@@ -204,9 +204,9 @@ namespace BeamUp.Input
                 m_Wrapper.m_GameplayActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @PlaceSteroid.started += instance.OnPlaceSteroid;
-                    @PlaceSteroid.performed += instance.OnPlaceSteroid;
-                    @PlaceSteroid.canceled += instance.OnPlaceSteroid;
+                    @ReflectLightbeam.started += instance.OnReflectLightbeam;
+                    @ReflectLightbeam.performed += instance.OnReflectLightbeam;
+                    @ReflectLightbeam.canceled += instance.OnReflectLightbeam;
                     @PointerPosition.started += instance.OnPointerPosition;
                     @PointerPosition.performed += instance.OnPointerPosition;
                     @PointerPosition.canceled += instance.OnPointerPosition;
@@ -228,7 +228,7 @@ namespace BeamUp.Input
         }
         public interface IGameplayActions
         {
-            void OnPlaceSteroid(InputAction.CallbackContext context);
+            void OnReflectLightbeam(InputAction.CallbackContext context);
             void OnPointerPosition(InputAction.CallbackContext context);
             void OnShootDrag(InputAction.CallbackContext context);
         }
